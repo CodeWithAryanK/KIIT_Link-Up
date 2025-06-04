@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -5,8 +7,19 @@ import { BookOpen, Trophy, Film } from "lucide-react"
 import Link from "next/link"
 import { LoginForm } from "@/components/login-form"
 import { SignupForm } from "@/components/signup-form"
+import { useRef, useState } from "react"
 
 export default function Home() {
+  const [tabValue, setTabValue] = useState("login");
+  const signupRef = useRef<HTMLDivElement>(null);
+
+  const handleGetStarted = () => {
+    setTabValue("signup");
+    setTimeout(() => {
+      signupRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100); // Wait for tab to render
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-gray-900">
       <header className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm sticky top-0 z-10">
@@ -44,19 +57,21 @@ export default function Home() {
               learning based on shared interests, skills, and goals.
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-900/50">
+              <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-900/50" onClick={handleGetStarted}>
                 Get Started
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+                asChild
               >
-                Learn More
+                <a href="#features">Learn More</a>
               </Button>
             </div>
           </div>
           <div className="flex justify-center">
+            <div ref={signupRef} />
             <Card className="w-full max-w-md border-gray-700 shadow-xl shadow-black/50 bg-gray-800/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-center text-green-400">Join KIIT LinkUp</CardTitle>
@@ -65,7 +80,7 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue="login" className="w-full">
+                <Tabs value={tabValue} onValueChange={setTabValue} defaultValue="login" className="w-full">
                   <TabsList className="grid w-full grid-cols-2 bg-gray-700">
                     <TabsTrigger
                       value="login"
@@ -83,7 +98,7 @@ export default function Home() {
                   <TabsContent value="login">
                     <LoginForm />
                   </TabsContent>
-                  <TabsContent value="signup">
+                  <TabsContent value="signup" id="signup-form">
                     <SignupForm />
                   </TabsContent>
                 </Tabs>
@@ -200,7 +215,7 @@ export default function Home() {
             <p className="mx-auto mt-4 max-w-[700px] text-green-100 md:text-xl">
               Join KIIT LinkUp today and connect with students who share your interests, goals, and passions.
             </p>
-            <Button size="lg" className="mt-8 bg-white text-green-800 hover:bg-gray-100 shadow-lg">
+            <Button size="lg" className="mt-8 bg-white text-green-800 hover:bg-gray-100 shadow-lg" onClick={handleGetStarted}>
               Get Started Now
             </Button>
           </div>
