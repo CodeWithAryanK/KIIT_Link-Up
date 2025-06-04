@@ -33,19 +33,9 @@ export default function Home() {
         </div>
       </header>
       <main className="flex-1">
-        <section className="container grid items-center gap-6 pb-8 pt-6 md:grid-cols-2 md:py-10 relative">
+        <section className="container mx-auto grid items-center gap-6 pb-8 pt-6 md:grid-cols-2 md:py-10 relative max-w-7xl">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(#374151_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
           <div className="flex flex-col items-start gap-4">
-            <div className="flex items-center gap-2">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-00KFNlkVFlDAz4CLvpBnziDHPJck1I.png"
-                alt="KIIT Logo"
-                className="h-6 w-6"
-              />
-              <div className="inline-block rounded-lg bg-green-900/50 px-3 py-1 text-sm text-green-300 border border-green-700">
-                Official KIIT Platform
-              </div>
-            </div>
             <h1 className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl text-white">
               Welcome to <span className="text-green-400">KIIT LinkUp</span>
             </h1>
@@ -104,7 +94,7 @@ export default function Home() {
 
         <section id="features" className="py-12 md:py-24 relative overflow-hidden bg-gray-800">
           <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-700 -z-10"></div>
-          <div className="container relative">
+          <div className="container mx-auto relative max-w-7xl">
             <div className="absolute top-0 right-0 -z-10 h-72 w-72 rounded-full bg-green-500 opacity-10 blur-3xl"></div>
             <div className="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-green-500 opacity-10 blur-3xl"></div>
             <div className="mb-12 text-center">
@@ -159,7 +149,7 @@ export default function Home() {
 
         <section id="how-it-works" className="py-12 md:py-24 relative bg-gray-900">
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#374151_1px,transparent_1px),linear-gradient(to_bottom,#374151_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20"></div>
-          <div className="container">
+          <div className="container mx-auto max-w-7xl">
             <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">How It Works</h2>
               <p className="mx-auto mt-4 max-w-[700px] text-gray-300 md:text-xl">
@@ -203,7 +193,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-green-900 to-green-800 -z-10"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] [background-size:24px_24px] opacity-10 -z-10"></div>
           <div className="absolute top-0 right-0 -z-10 h-96 w-96 rounded-full bg-green-500 opacity-20 blur-3xl"></div>
-          <div className="container text-center relative">
+          <div className="container mx-auto text-center relative max-w-7xl">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
               Ready to find your circle?
             </h2>
@@ -217,7 +207,7 @@ export default function Home() {
         </section>
       </main>
       <footer className="border-t border-gray-800 py-6 bg-gray-900">
-        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="container mx-auto flex flex-col items-center justify-between gap-4 md:flex-row max-w-7xl">
           <div className="flex items-center gap-3">
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-00KFNlkVFlDAz4CLvpBnziDHPJck1I.png"
