@@ -4,22 +4,57 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { auth } from "@/lib/firebase"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { FirebaseError } from "firebase/app"
 
 export function LoginForm() {
   const [showManualLogin, setShowManualLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    setError(null)
     setIsLoading(true)
-    const formData = new FormData(event.currentTarget)
-    const username = formData.get("username") as string
-    const password = formData.get("password") as string
+
     try {
-      // TODO: Implement login logic
-      console.log("Login attempt with:", { username, password })
-    } catch (error) {
+      // Sign in with email and password
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      const user = userCredential.user
+      console.log("Login successful:", user.uid)
+      
+      // Reset form and show success
+      setEmail("")
+      setPassword("")
+      setShowManualLogin(false)
+      alert("Login successful!")
+      
+      // TODO: Redirect to dashboard or home page
+    } catch (error: unknown) {
       console.error("Login failed:", error)
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            setError('Invalid email address')
+            break
+          case 'auth/user-disabled':
+            setError('This account has been disabled')
+            break
+          case 'auth/user-not-found':
+            setError('No account found with this email')
+            break
+          case 'auth/wrong-password':
+            setError('Incorrect password')
+            break
+          default:
+            setError('An error occurred during login. Please try again.')
+        }
+      } else {
+        setError('An unexpected error occurred. Please try again.')
+      }
     } finally {
       setIsLoading(false)
     }
@@ -28,13 +63,27 @@ export function LoginForm() {
   if (showManualLogin) {
     return (
       <form onSubmit={onSubmit} className="space-y-4">
+        <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 flex items-center gap-3">
+          <span className="text-green-400 text-xl">🔐</span>
+          <div>
+            <div className="font-semibold text-green-300">Welcome back!</div>
+            <div className="text-green-100 text-sm">Please enter your credentials to login</div>
+          </div>
+        </div>
+        {error && (
+          <div className="bg-red-900/20 border border-red-700 rounded-lg p-3 text-red-400 text-sm">
+            {error}
+          </div>
+        )}
         <div className="space-y-2">
-          <Label htmlFor="username" className="text-base text-foreground">Username</Label>
+          <Label htmlFor="email" className="text-base text-foreground">KIIT Email</Label>
           <Input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Enter your username"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="yourname@kiit.ac.in"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             disabled={isLoading}
             className="bg-[#232b36] border border-white text-white placeholder:text-gray-400 focus:border-white focus:ring-0"
@@ -47,6 +96,8 @@ export function LoginForm() {
             name="password"
             type="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             disabled={isLoading}
             className="bg-[#232b36] border border-white text-white placeholder:text-gray-400 focus:border-white focus:ring-0"
@@ -62,7 +113,12 @@ export function LoginForm() {
         <button
           type="button"
           className="w-full text-green-400 hover:underline text-center mt-2"
-          onClick={() => setShowManualLogin(false)}
+          onClick={() => {
+            setShowManualLogin(false)
+            setError(null)
+            setEmail("")
+            setPassword("")
+          }}
         >
           Back to options
         </button>
