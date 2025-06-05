@@ -32,7 +32,7 @@ export function SignupForm() {
       setError('Please use your KIIT email address');
       setIsLoading(false);
       return;
-  }
+    }
 
     // Validate password
     if (password.length < 6) {
